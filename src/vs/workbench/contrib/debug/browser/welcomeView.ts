@@ -24,7 +24,7 @@ import { isCodeEditor } from 'vs/editor/browser/editorBrowser';
 import { IStorageService, StorageScope, StorageTarget } from 'vs/platform/storage/common/storage';
 import { ITelemetryService } from 'vs/platform/telemetry/common/telemetry';
 import { DisposableStore } from 'vs/base/common/lifecycle';
-import { SELECT_AND_START_ID, DEBUG_CONFIGURE_COMMAND_ID, DEBUG_START_COMMAND_ID } from 'vs/workbench/contrib/debug/browser/debugCommands';
+import { SELECT_AND_START_ID, DEBUG_CONFIGURE_COMMAND_ID, DEBUG_START_COMMAND_ID, TRANSFORM_FLOW_TO_CODE_ID } from 'vs/workbench/contrib/debug/browser/debugCommands';
 
 const debugStartLanguageKey = 'debugStartLanguage';
 const CONTEXT_DEBUG_START_LANGUAGE = new RawContextKey<string>(debugStartLanguageKey, undefined);
@@ -96,6 +96,9 @@ export class WelcomeView extends ViewPane {
 		}));
 		setContextKey();
 
+		const transfomKeybinding = this.keybindingService.lookupKeybinding(TRANSFORM_FLOW_TO_CODE_ID);
+		transformKeybindingLabel = transfomKeybinding ? ` (${transfomKeybinding.getLabel()})` : '';
+
 		const debugKeybinding = this.keybindingService.lookupKeybinding(DEBUG_START_COMMAND_ID);
 		debugKeybindingLabel = debugKeybinding ? ` (${debugKeybinding.getLabel()})` : '';
 	}
@@ -111,6 +114,15 @@ viewsRegistry.registerViewWelcomeContent(WelcomeView.ID, {
 		"[Open a file](command:{0}) which can be debugged or run.", isMacintosh ? OpenFileFolderAction.ID : OpenFileAction.ID),
 	when: ContextKeyExpr.and(CONTEXT_DEBUGGERS_AVAILABLE, CONTEXT_DEBUGGER_INTERESTED_IN_ACTIVE_EDITOR.toNegated()),
 	group: ViewContentGroups.Open
+});
+
+// darwin flow
+let transformKeybindingLabel = '';
+viewsRegistry.registerViewWelcomeContent(WelcomeView.ID, {
+	content: localize({ key: 'runAndDebugAction', comment: ['Please do not translate the word "commmand", it is part of our internal syntax which must not change'] },
+		"[Run and Debug{0}](command:{1})", transformKeybindingLabel, TRANSFORM_FLOW_TO_CODE_ID),
+	when: CONTEXT_DEBUGGERS_AVAILABLE,
+	group: ViewContentGroups.Debug
 });
 
 let debugKeybindingLabel = '';

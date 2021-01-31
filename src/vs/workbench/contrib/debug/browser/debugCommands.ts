@@ -51,6 +51,7 @@ export const JUMP_TO_CURSOR_ID = 'debug.jumpToCursor';
 export const FOCUS_SESSION_ID = 'workbench.action.debug.focusProcess';
 export const SELECT_AND_START_ID = 'workbench.action.debug.selectandstart';
 export const DEBUG_CONFIGURE_COMMAND_ID = 'workbench.action.debug.configure';
+export const TRANSFORM_FLOW_TO_CODE_ID = 'wrokbench.action.transform';
 export const DEBUG_START_COMMAND_ID = 'workbench.action.debug.start';
 export const DEBUG_RUN_COMMAND_ID = 'workbench.action.debug.run';
 export const EDIT_EXPRESSION_COMMAND_ID = 'debug.renameWatchExpression';
@@ -379,6 +380,21 @@ export function registerCommands(): void {
 			quickInputService.quickAccess.show('debug ');
 		}
 	});
+
+	// darwin flow
+	// KeybindingsRegistry.registerCommandAndKeybindingRule({
+	// 	id: TRANSFORM_FLOW_TO_CODE_ID,
+	// 	weight: KeybindingWeight.WorkbenchContrib,
+	// 	primary: KeyCode.F5,
+	// 	when: ContextKeyExpr.and(CONTEXT_DEBUGGERS_AVAILABLE, CONTEXT_DEBUG_STATE.notEqualsTo(getStateLabel(State.Initializing))),
+	// 	handler: async (accessor: ServicesAccessor, debugStartOptions?: { noDebug: boolean }) => {
+	// 		const debugService = accessor.get(IDebugService);
+	// 		let { launch, name, getConfig } = debugService.getConfigurationManager().selectedConfiguration;
+	// 		const config = await getConfig();
+	// 		const clonedConfig = deepClone(config);
+	// 		await debugService.startDebugging(launch, clonedConfig || name, { noDebug: debugStartOptions && debugStartOptions.noDebug });
+	// 	}
+	// });
 
 	KeybindingsRegistry.registerCommandAndKeybindingRule({
 		id: DEBUG_START_COMMAND_ID,

@@ -27,6 +27,7 @@ import { assertIsDefined } from 'vs/base/common/types';
 import { workbenchConfigurationNodeBase } from 'vs/workbench/common/configuration';
 import { NEW_UNTITLED_FILE_COMMAND_ID } from 'vs/workbench/contrib/files/browser/fileCommands';
 import { DEBUG_START_COMMAND_ID } from 'vs/workbench/contrib/debug/browser/debugCommands';
+import { TRANSFORM_FLOW_TO_CODE_ID } from 'vs/workbench/contrib/debug/browser/debugCommands';
 
 const $ = dom.$;
 
@@ -47,6 +48,7 @@ const newUntitledFileMacOnly: WatermarkEntry = Object.assign({ mac: true }, newU
 const toggleTerminal: WatermarkEntry = { text: nls.localize({ key: 'watermark.toggleTerminal', comment: ['toggle is a verb here'] }, "Toggle Terminal"), id: TERMINAL_COMMAND_ID.TOGGLE };
 const findInFiles: WatermarkEntry = { text: nls.localize('watermark.findInFiles', "Find in Files"), id: FindInFilesActionId };
 const startDebugging: WatermarkEntry = { text: nls.localize('watermark.startDebugging', "Start Debugging"), id: DEBUG_START_COMMAND_ID };
+const startTransforming: WatermarkEntry = { text: nls.localize('watermark.startTransforming', "Transforming"), id: TRANSFORM_FLOW_TO_CODE_ID };
 
 const noFolderEntries = [
 	showCommands,
@@ -62,6 +64,7 @@ const folderEntries = [
 	quickAccess,
 	findInFiles,
 	startDebugging,
+	startTransforming,
 	toggleTerminal
 ];
 

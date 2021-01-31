@@ -35,7 +35,7 @@ import { IQuickInputService } from 'vs/platform/quickinput/common/quickInput';
 import { KeyCode, KeyMod } from 'vs/base/common/keyCodes';
 import { KeybindingWeight } from 'vs/platform/keybinding/common/keybindingsRegistry';
 import { ToggleViewAction } from 'vs/workbench/browser/actions/layoutActions';
-import { FOCUS_SESSION_ID, SELECT_AND_START_ID, DEBUG_CONFIGURE_COMMAND_ID, DEBUG_CONFIGURE_LABEL, DEBUG_START_LABEL, DEBUG_START_COMMAND_ID } from 'vs/workbench/contrib/debug/browser/debugCommands';
+import { FOCUS_SESSION_ID, SELECT_AND_START_ID, DEBUG_CONFIGURE_COMMAND_ID, DEBUG_CONFIGURE_LABEL, DEBUG_START_LABEL, DEBUG_START_COMMAND_ID, TRANSFORM_FLOW_TO_CODE_ID } from 'vs/workbench/contrib/debug/browser/debugCommands';
 
 export class DebugViewPaneContainer extends ViewPaneContainer {
 
@@ -95,6 +95,9 @@ export class DebugViewPaneContainer extends ViewPaneContainer {
 	}
 
 	getActionViewItem(action: IAction): IActionViewItem | undefined {
+		if (action.id === TRANSFORM_FLOW_TO_CODE_ID) {
+			// TODO: darwin flow
+		}
 		if (action.id === DEBUG_START_COMMAND_ID) {
 			this.startDebugActionViewItem = this.instantiationService.createInstance(StartDebugActionViewItem, null, action);
 			return this.startDebugActionViewItem;
@@ -170,6 +173,7 @@ export class OpenDebugViewletAction extends ShowViewletAction {
 		super(id, label, VIEWLET_ID, viewletService, editorGroupService, layoutService);
 	}
 }
+// TODO: darwin flow
 
 MenuRegistry.appendMenuItem(MenuId.ViewContainerTitle, {
 	when: ContextKeyExpr.and(ContextKeyEqualsExpr.create('viewContainer', VIEWLET_ID), CONTEXT_DEBUG_UX.notEqualsTo('simple'), WorkbenchStateContext.notEqualsTo('empty'),
