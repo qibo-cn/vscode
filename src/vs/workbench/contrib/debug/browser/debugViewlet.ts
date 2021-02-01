@@ -7,7 +7,7 @@ import 'vs/css!./media/debugViewlet';
 import * as nls from 'vs/nls';
 import { IAction, IActionViewItem } from 'vs/base/common/actions';
 import { IDebugService, VIEWLET_ID, State, BREAKPOINTS_VIEW_ID, CONTEXT_DEBUG_UX, CONTEXT_DEBUG_UX_KEY, REPL_VIEW_ID, CONTEXT_DEBUG_STATE, ILaunch, getStateLabel, CONTEXT_DEBUGGERS_AVAILABLE } from 'vs/workbench/contrib/debug/common/debug';
-import { StartDebugActionViewItem, FocusSessionActionViewItem } from 'vs/workbench/contrib/debug/browser/debugActionViewItems';
+import { StartDebugActionViewItem, FocusSessionActionViewItem, TransformFLowIntoCode } from 'vs/workbench/contrib/debug/browser/debugActionViewItems';
 import { IInstantiationService, ServicesAccessor } from 'vs/platform/instantiation/common/instantiation';
 import { IExtensionService } from 'vs/workbench/services/extensions/common/extensions';
 import { IProgressService } from 'vs/platform/progress/common/progress';
@@ -39,6 +39,7 @@ import { FOCUS_SESSION_ID, SELECT_AND_START_ID, DEBUG_CONFIGURE_COMMAND_ID, DEBU
 
 export class DebugViewPaneContainer extends ViewPaneContainer {
 
+	private transformFlowIntoCode: StartDebugActionViewItem | undefined;
 	private startDebugActionViewItem: StartDebugActionViewItem | undefined;
 	private progressResolve: (() => void) | undefined;
 	private breakpointView: ViewPane | undefined;
@@ -97,6 +98,10 @@ export class DebugViewPaneContainer extends ViewPaneContainer {
 	getActionViewItem(action: IAction): IActionViewItem | undefined {
 		if (action.id === TRANSFORM_FLOW_TO_CODE_ID) {
 			// TODO: darwin flow
+			this.transformFlowIntoCode = this.instantiationService.createInstance(
+				TransformFLowIntoCode, null, action
+			);
+			return this.transformFlowIntoCode;
 		}
 		if (action.id === DEBUG_START_COMMAND_ID) {
 			this.startDebugActionViewItem = this.instantiationService.createInstance(StartDebugActionViewItem, null, action);

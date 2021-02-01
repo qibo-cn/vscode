@@ -9,7 +9,7 @@ import { List } from 'vs/base/browser/ui/list/listWidget';
 import { KeybindingsRegistry, KeybindingWeight } from 'vs/platform/keybinding/common/keybindingsRegistry';
 import { IListService } from 'vs/platform/list/browser/listService';
 import { IWorkspaceContextService, WorkbenchState } from 'vs/platform/workspace/common/workspace';
-import { IDebugService, IEnablement, CONTEXT_BREAKPOINTS_FOCUSED, CONTEXT_WATCH_EXPRESSIONS_FOCUSED, CONTEXT_VARIABLES_FOCUSED, EDITOR_CONTRIBUTION_ID, IDebugEditorContribution, CONTEXT_IN_DEBUG_MODE, CONTEXT_EXPRESSION_SELECTED, IConfig, IStackFrame, IThread, IDebugSession, CONTEXT_DEBUG_STATE, IDebugConfiguration, CONTEXT_JUMP_TO_CURSOR_SUPPORTED, REPL_VIEW_ID, CONTEXT_DEBUGGERS_AVAILABLE, State, getStateLabel, CONTEXT_BREAKPOINT_INPUT_FOCUSED } from 'vs/workbench/contrib/debug/common/debug';
+import { IDebugService, IEnablement, CONTEXT_BREAKPOINTS_FOCUSED, CONTEXT_WATCH_EXPRESSIONS_FOCUSED, CONTEXT_VARIABLES_FOCUSED, EDITOR_CONTRIBUTION_ID, IDebugEditorContribution, CONTEXT_IN_DEBUG_MODE, CONTEXT_EXPRESSION_SELECTED, IConfig, IStackFrame, IThread, IDebugSession, CONTEXT_DEBUG_STATE, CONTEXT_TRANSFORM_STATE, IDebugConfiguration, CONTEXT_JUMP_TO_CURSOR_SUPPORTED, REPL_VIEW_ID, CONTEXT_DEBUGGERS_AVAILABLE, CONTEXT_TRANSFORM_AVAILABLE, State, getStateLabel, CONTEXT_BREAKPOINT_INPUT_FOCUSED } from 'vs/workbench/contrib/debug/common/debug';
 import { Expression, Variable, Breakpoint, FunctionBreakpoint, DataBreakpoint } from 'vs/workbench/contrib/debug/common/debugModel';
 import { IExtensionsViewPaneContainer, VIEWLET_ID as EXTENSIONS_VIEWLET_ID } from 'vs/workbench/contrib/extensions/common/extensions';
 import { IViewletService } from 'vs/workbench/services/viewlet/browser/viewlet';
@@ -407,6 +407,19 @@ export function registerCommands(): void {
 			const config = await getConfig();
 			const clonedConfig = deepClone(config);
 			await debugService.startDebugging(launch, clonedConfig || name, { noDebug: debugStartOptions && debugStartOptions.noDebug });
+		}
+	});
+
+	// darwin flow
+	KeybindingsRegistry.registerCommandAndKeybindingRule({
+		id: DEBUG_RUN_COMMAND_ID,
+		weight: KeybindingWeight.WorkbenchContrib,
+		primary: KeyMod.CtrlCmd,
+		mac: { primary: KeyMod.WinCtrl },
+		when: ContextKeyExpr.and(CONTEXT_TRANSFORM_AVAILABLE, CONTEXT_TRANSFORM_STATE.notEqualsTo(getStateLabel(State.Initializing))),
+		handler: async (accessor: ServicesAccessor) => {
+			const commandService = accessor.get(ICommandService);
+			await commandService.executeCommand(TRANSFORM_FLOW_TO_CODE_ID, { noDebug: true });
 		}
 	});
 

@@ -24,6 +24,56 @@ import { debugStart } from 'vs/workbench/contrib/debug/browser/debugIcons';
 
 const $ = dom.$;
 
+export class TransformFLowIntoCode implements IActionViewItem {
+	actionRunner!: IActionRunner;
+	context: unknown;
+	container!: HTMLElement;
+	private start!: HTMLElement;
+
+	private selectBox: SelectBox;
+	private toDispose: IDisposable[];
+	constructor(
+		@IContextViewService contextViewService: IContextViewService,
+	) {
+		this.toDispose = [];
+		this.selectBox = new SelectBox([], -1, contextViewService, undefined, { ariaLabel: nls.localize('debugLaunchConfigurations', 'Debug Launch Configurations') });
+		this.toDispose.push(this.selectBox);
+	}
+
+	setActionContext(context: any): void {
+		this.context = context;
+	}
+
+	render(container: HTMLElement): void {
+		this.container = container;
+	}
+
+	isEnabled(): boolean {
+		return true;
+	}
+
+	focus(fromRight?: boolean): void {
+		if (fromRight) {
+			this.selectBox.focus();
+		} else {
+			this.start.focus();
+		}
+	}
+
+	blur(): void {
+		this.container.blur();
+	}
+
+	dispose(): void {
+		this.toDispose = dispose(this.toDispose);
+	}
+	print() {
+		console.log("hello");
+	}
+}
+
+
+
 export class StartDebugActionViewItem implements IActionViewItem {
 
 	private static readonly SEPARATOR = '─────────';
