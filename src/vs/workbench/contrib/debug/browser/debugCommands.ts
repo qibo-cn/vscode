@@ -419,16 +419,16 @@ export function registerCommands(): void {
 		mac: { primary: KeyMod.WinCtrl },
 		when: ContextKeyExpr.and(CONTEXT_TRANSFORM_AVAILABLE, CONTEXT_TRANSFORM_STATE.notEqualsTo(getStateLabel(State.Initializing))),
 		handler: async (accessor: ServicesAccessor) => {
-			// cp.exec('node /Users/kenny/work/github/test.js', (error, stdout, stderr) => {
-			// 	if (error) {
-			// 		console.log(error);
-			// 	}
-			// 	if (stderr) {
-			// 		console.log(stderr);
-			// 	}
-			// 	console.log(stdout);
-			// });
-			console.log(__dirname);
+			// TODO: replace file name
+			cp.exec('node /Users/kenny/work/github/parserdrawio/src/main.js /Users/kenny/work/github/parserdrawio/test/agc.drawio', (error, stdout, stderr) => {
+				if (error) {
+					console.log(error);
+				}
+				if (stderr) {
+					console.log(stderr);
+				}
+				console.log(stdout);
+			});
 		}
 	});
 	KeybindingsRegistry.registerCommandAndKeybindingRule({
