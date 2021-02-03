@@ -35,7 +35,7 @@ import { IQuickInputService } from 'vs/platform/quickinput/common/quickInput';
 import { KeyCode, KeyMod } from 'vs/base/common/keyCodes';
 import { KeybindingWeight } from 'vs/platform/keybinding/common/keybindingsRegistry';
 import { ToggleViewAction } from 'vs/workbench/browser/actions/layoutActions';
-import { FOCUS_SESSION_ID, SELECT_AND_START_ID, DEBUG_CONFIGURE_COMMAND_ID, DEBUG_CONFIGURE_LABEL, DEBUG_START_LABEL, DEBUG_START_COMMAND_ID, TRANSFORM_FLOW_TO_CODE_ID, TRAINING_NETWORK_ID } from 'vs/workbench/contrib/debug/browser/debugCommands';
+import { FOCUS_SESSION_ID, SELECT_AND_START_ID, DEBUG_CONFIGURE_COMMAND_ID, DEBUG_CONFIGURE_LABEL, DEBUG_START_LABEL, DEBUG_START_COMMAND_ID, TRANSFORM_FLOW_TO_CODE_ID, TRAINING_NETWORK_ID, DARWIN_COMPILE_ID, SIMULATE_NETWORK_ID } from 'vs/workbench/contrib/debug/browser/debugCommands';
 
 export class DebugViewPaneContainer extends ViewPaneContainer {
 
@@ -96,6 +96,12 @@ export class DebugViewPaneContainer extends ViewPaneContainer {
 	}
 
 	getActionViewItem(action: IAction): IActionViewItem | undefined {
+		if (action.id === SIMULATE_NETWORK_ID) {
+			// TODO
+		}
+		if (action.id === DARWIN_COMPILE_ID) {
+			// TODO
+		}
 		if (action.id === TRAINING_NETWORK_ID) {
 			// TODO
 		}

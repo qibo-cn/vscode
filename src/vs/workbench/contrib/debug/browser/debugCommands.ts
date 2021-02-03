@@ -54,6 +54,8 @@ export const SELECT_AND_START_ID = 'workbench.action.debug.selectandstart';
 export const DEBUG_CONFIGURE_COMMAND_ID = 'workbench.action.debug.configure';
 export const TRANSFORM_FLOW_TO_CODE_ID = 'wrokbench.action.transform';
 export const TRAINING_NETWORK_ID = 'workbench.action.training';
+export const DARWIN_COMPILE_ID = 'workbench.action.darwin.compile';
+export const SIMULATE_NETWORK_ID = 'workbench.action.simulate.network';
 export const DEBUG_START_COMMAND_ID = 'workbench.action.debug.start';
 export const DEBUG_RUN_COMMAND_ID = 'workbench.action.debug.run';
 export const EDIT_EXPRESSION_COMMAND_ID = 'debug.renameWatchExpression';
@@ -430,6 +432,27 @@ export function registerCommands(): void {
 				}
 				console.log(stdout);
 			});
+		}
+	});
+	KeybindingsRegistry.registerCommandAndKeybindingRule({
+		id: DARWIN_COMPILE_ID,
+		weight: KeybindingWeight.WorkbenchContrib,
+		primary: KeyMod.CtrlCmd | KeyCode.Alt,
+		mac: { primary: KeyMod.WinCtrl },
+		when: ContextKeyExpr.and(CONTEXT_TRANSFORM_AVAILABLE, CONTEXT_TRANSFORM_STATE.notEqualsTo(getStateLabel(State.Initializing))),
+		handler: async (accessor: ServicesAccessor) => {
+			// TODO: compile darwinlang
+		}
+	});
+
+	KeybindingsRegistry.registerCommandAndKeybindingRule({
+		id: SIMULATE_NETWORK_ID,
+		weight: KeybindingWeight.WorkbenchContrib,
+		primary: KeyMod.CtrlCmd | KeyCode.Alt,
+		mac: { primary: KeyMod.WinCtrl },
+		when: ContextKeyExpr.and(CONTEXT_TRANSFORM_AVAILABLE, CONTEXT_TRANSFORM_STATE.notEqualsTo(getStateLabel(State.Initializing))),
+		handler: async (accessor: ServicesAccessor) => {
+			// TODO: start simulate
 		}
 	});
 

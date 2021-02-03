@@ -21,7 +21,7 @@ import {
 } from 'vs/workbench/contrib/debug/common/debug';
 import { DebugToolBar } from 'vs/workbench/contrib/debug/browser/debugToolBar';
 import { DebugService } from 'vs/workbench/contrib/debug/browser/debugService';
-import { registerCommands, ADD_CONFIGURATION_ID, TOGGLE_INLINE_BREAKPOINT_ID, COPY_STACK_TRACE_ID, RESTART_SESSION_ID, TERMINATE_THREAD_ID, STEP_OVER_ID, STEP_INTO_ID, STEP_OUT_ID, PAUSE_ID, DISCONNECT_ID, STOP_ID, RESTART_FRAME_ID, CONTINUE_ID, FOCUS_REPL_ID, JUMP_TO_CURSOR_ID, RESTART_LABEL, STEP_INTO_LABEL, STEP_OVER_LABEL, STEP_OUT_LABEL, PAUSE_LABEL, DISCONNECT_LABEL, STOP_LABEL, CONTINUE_LABEL, DEBUG_START_LABEL, DEBUG_START_COMMAND_ID, TRANSFORM_FLOW_TO_CODE_ID, TRAINING_NETWORK_ID, DEBUG_RUN_LABEL, DEBUG_RUN_COMMAND_ID, EDIT_EXPRESSION_COMMAND_ID, REMOVE_EXPRESSION_COMMAND_ID } from 'vs/workbench/contrib/debug/browser/debugCommands';
+import { registerCommands, ADD_CONFIGURATION_ID, TOGGLE_INLINE_BREAKPOINT_ID, COPY_STACK_TRACE_ID, RESTART_SESSION_ID, TERMINATE_THREAD_ID, STEP_OVER_ID, STEP_INTO_ID, STEP_OUT_ID, PAUSE_ID, DISCONNECT_ID, STOP_ID, RESTART_FRAME_ID, CONTINUE_ID, FOCUS_REPL_ID, JUMP_TO_CURSOR_ID, RESTART_LABEL, STEP_INTO_LABEL, STEP_OVER_LABEL, STEP_OUT_LABEL, PAUSE_LABEL, DISCONNECT_LABEL, STOP_LABEL, CONTINUE_LABEL, DARWIN_COMPILE_ID, SIMULATE_NETWORK_ID, DEBUG_START_LABEL, DEBUG_START_COMMAND_ID, TRANSFORM_FLOW_TO_CODE_ID, TRAINING_NETWORK_ID, DEBUG_RUN_LABEL, DEBUG_RUN_COMMAND_ID, EDIT_EXPRESSION_COMMAND_ID, REMOVE_EXPRESSION_COMMAND_ID } from 'vs/workbench/contrib/debug/browser/debugCommands';
 import { StatusBarColorProvider } from 'vs/workbench/contrib/debug/browser/statusbarColorProvider';
 import { IViewsRegistry, Extensions as ViewExtensions, IViewContainersRegistry, ViewContainerLocation, ViewContainer } from 'vs/workbench/common/views';
 import { isMacintosh, isWeb } from 'vs/base/common/platform';
@@ -221,6 +221,30 @@ function registerDebugMenu(): void {
 			id: TRAINING_NETWORK_ID,
 			title: nls.localize({ key: 'miTraining', comment: ['&& denotes a mnemonic'] },
 				"&&Training Network")
+		},
+		order: 1,
+		when: CONTEXT_DEBUGGERS_AVAILABLE
+	});
+
+	// compile darwinlang menu
+	MenuRegistry.appendMenuItem(MenuId.MenubarDebugMenu, {
+		group: '1_debug',
+		command: {
+			id: DARWIN_COMPILE_ID,
+			title: nls.localize({ key: 'miTraining', comment: ['&& denotes a mnemonic'] },
+				"&&Compile Darwinlang")
+		},
+		order: 1,
+		when: CONTEXT_DEBUGGERS_AVAILABLE
+	});
+
+	// compile darwinlang menu
+	MenuRegistry.appendMenuItem(MenuId.MenubarDebugMenu, {
+		group: '1_debug',
+		command: {
+			id: SIMULATE_NETWORK_ID,
+			title: nls.localize({ key: 'miTraining', comment: ['&& denotes a mnemonic'] },
+				"&&Simulate Neuron Network")
 		},
 		order: 1,
 		when: CONTEXT_DEBUGGERS_AVAILABLE
