@@ -53,6 +53,7 @@ export const FOCUS_SESSION_ID = 'workbench.action.debug.focusProcess';
 export const SELECT_AND_START_ID = 'workbench.action.debug.selectandstart';
 export const DEBUG_CONFIGURE_COMMAND_ID = 'workbench.action.debug.configure';
 export const TRANSFORM_FLOW_TO_CODE_ID = 'wrokbench.action.transform';
+export const TRAINING_NETWORK_ID = 'workbench.action.training';
 export const DEBUG_START_COMMAND_ID = 'workbench.action.debug.start';
 export const DEBUG_RUN_COMMAND_ID = 'workbench.action.debug.run';
 export const EDIT_EXPRESSION_COMMAND_ID = 'debug.renameWatchExpression';
@@ -431,6 +432,18 @@ export function registerCommands(): void {
 			});
 		}
 	});
+
+	KeybindingsRegistry.registerCommandAndKeybindingRule({
+		id: TRAINING_NETWORK_ID,
+		weight: KeybindingWeight.WorkbenchContrib,
+		primary: KeyMod.CtrlCmd | KeyCode.Alt,
+		mac: { primary: KeyMod.WinCtrl },
+		when: ContextKeyExpr.and(CONTEXT_TRANSFORM_AVAILABLE, CONTEXT_TRANSFORM_STATE.notEqualsTo(getStateLabel(State.Initializing))),
+		handler: async (accessor: ServicesAccessor) => {
+			// TODO: start training network
+		}
+	});
+
 	KeybindingsRegistry.registerCommandAndKeybindingRule({
 		id: DEBUG_RUN_COMMAND_ID,
 		weight: KeybindingWeight.WorkbenchContrib,
