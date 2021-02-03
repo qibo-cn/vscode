@@ -30,6 +30,7 @@ import { IConfigurationService } from 'vs/platform/configuration/common/configur
 import { IQuickInputService } from 'vs/platform/quickinput/common/quickInput';
 import { IViewsService } from 'vs/workbench/common/views';
 import { deepClone } from 'vs/base/common/objects';
+import * as cp from 'child_process';
 
 export const ADD_CONFIGURATION_ID = 'debug.addConfiguration';
 export const TOGGLE_INLINE_BREAKPOINT_ID = 'editor.debug.action.toggleInlineBreakpoint';
@@ -412,17 +413,24 @@ export function registerCommands(): void {
 
 	// darwin flow
 	KeybindingsRegistry.registerCommandAndKeybindingRule({
-		id: DEBUG_RUN_COMMAND_ID,
+		id: TRANSFORM_FLOW_TO_CODE_ID,
 		weight: KeybindingWeight.WorkbenchContrib,
-		primary: KeyMod.CtrlCmd,
+		primary: KeyMod.CtrlCmd | KeyCode.Alt,
 		mac: { primary: KeyMod.WinCtrl },
 		when: ContextKeyExpr.and(CONTEXT_TRANSFORM_AVAILABLE, CONTEXT_TRANSFORM_STATE.notEqualsTo(getStateLabel(State.Initializing))),
 		handler: async (accessor: ServicesAccessor) => {
-			const commandService = accessor.get(ICommandService);
-			await commandService.executeCommand(TRANSFORM_FLOW_TO_CODE_ID, { noDebug: true });
+			// cp.exec('node /Users/kenny/work/github/test.js', (error, stdout, stderr) => {
+			// 	if (error) {
+			// 		console.log(error);
+			// 	}
+			// 	if (stderr) {
+			// 		console.log(stderr);
+			// 	}
+			// 	console.log(stdout);
+			// });
+			console.log(__dirname);
 		}
 	});
-
 	KeybindingsRegistry.registerCommandAndKeybindingRule({
 		id: DEBUG_RUN_COMMAND_ID,
 		weight: KeybindingWeight.WorkbenchContrib,
